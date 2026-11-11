@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pip과 함께 가족 영어</title>
+<meta name="theme-color" content="#FFC83D">
+<meta name="description" content="Pip과 함께하는 우리 가족 영어 회화">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pip 영어">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Fredoka:wght@500;600&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF8EC; --card:#FFFFFF; --ink:#2B2A33; --soft:#6B6878; --line:#EFE6D6;
+    --sun:#FFC83D; --sun-deep:#F5A300; --leaf:#47B881; --sky:#4A9FE8; --berry:#EE6A7B; --plum:#8E6CD8;
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Gowun Dodum",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .en{font-family:"Fredoka","Jua",system-ui,sans-serif;font-weight:600}
+  .ko-title{font-family:"Jua",system-ui,sans-serif}
+  #app{max-width:860px;margin:0 auto;padding:18px 16px 60px;min-height:100vh}
+  .topbar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .topbar h1{font-family:"Jua";font-size:22px;margin:0;flex:1}
+  .back{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 14px;font-size:15px}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:18px}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:560px){.g2{grid-template-columns:1fr}}
+  .btn{border-radius:16px;padding:14px 18px;font-size:17px;font-family:"Jua";display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .08s}
+  .btn:active{transform:scale(.96)}
+  .btn.primary{background:var(--sun);color:#3a2a00;box-shadow:0 4px 0 var(--sun-deep)}
+  .btn.green{background:var(--leaf);color:#fff;box-shadow:0 4px 0 #2f8d61}
+  .btn.blue{background:var(--sky);color:#fff;box-shadow:0 4px 0 #2f7cc0}
+  .btn.ghost{background:#fff;border:2px solid var(--line);color:var(--ink)}
+  .btn.big{font-size:24px;padding:20px 26px;border-radius:22px}
+  .btn[disabled]{opacity:.45;pointer-events:none}
+  .muted{color:var(--soft);font-size:14px}
+  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;background:#F3EEFF;color:var(--plum);font-family:"Jua"}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .center{text-align:center}
+  .profile{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 10px;border-radius:var(--radius);background:#fff;border:2px solid var(--line);font-family:"Jua";font-size:19px}
+  .profile .face{font-size:52px;line-height:1}
+  .profile small{font-family:"Gowun Dodum";color:var(--soft);font-size:13px}
+  .family-cta{background:linear-gradient(135deg,#FFD866,#FFB443);border-radius:28px;padding:22px;display:flex;align-items:center;gap:16px;box-shadow:0 6px 0 #E89A1E;color:#3a2a00;width:100%;text-align:left}
+  .family-cta h2{margin:0;font-family:"Jua";font-size:26px}
+  .family-cta p{margin:4px 0 0;font-size:15px}
+  .pip{width:110px;height:110px;flex-shrink:0}
+  .pip.bounce{animation:bounce 1.2s ease-in-out infinite}
+  .pip.talk .beak{animation:talk .25s ease-in-out infinite alternate}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes talk{from{transform:scaleY(1)}to{transform:scaleY(.55)}}
+  .stage-bar{display:flex;gap:6px;margin:6px 0 14px}
+  .stage-bar div{flex:1;height:10px;border-radius:99px;background:var(--line);position:relative;overflow:hidden}
+  .stage-bar div.done{background:var(--leaf)}
+  .stage-bar div.now span{position:absolute;inset:0;background:var(--sun);transform-origin:left}
+  .stage-title{font-family:"Jua";font-size:24px;margin:0}
+  .huge{font-size:120px;line-height:1.1}
+  .word{font-size:46px;margin:6px 0}
+  .line-big{font-size:30px;line-height:1.35;margin:8px 0}
+  .hint{font-size:15px;color:var(--soft)}
+  .turn-who{display:inline-flex;align-items:center;gap:8px;font-family:"Jua";font-size:20px;padding:6px 14px;border-radius:999px;background:#EAF6EF;color:#23704a}
+  .chant p{font-size:26px;margin:8px 0;padding:6px 12px;border-radius:12px;transition:background .2s}
+  .chant p.on{background:#FFF1C2}
+  .timer{font-family:"Fredoka";font-size:15px;color:var(--soft)}
+  .burst{position:fixed;pointer-events:none;font-size:34px;animation:fly 1.1s ease-out forwards;z-index:50}
+  @keyframes fly{from{opacity:1;transform:translate(0,0) scale(.6)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3)}}
+  .listen-ring{width:90px;height:90px;border-radius:50%;margin:10px auto;display:flex;align-items:center;justify-content:center;font-size:40px;background:#FFF1C2;animation:pulse 1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,200,61,.6)}50%{box-shadow:0 0 0 18px rgba(255,200,61,0)}}
+  .stars{font-size:34px;letter-spacing:4px}
+  .chips{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+  .chip{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 16px;font-size:19px;text-align:left}
+  .chip:hover{border-color:var(--sky)}
+  .bubble{background:#fff;border:2px solid var(--line);border-radius:20px;padding:14px 16px;font-size:21px;position:relative}
+  .me{background:#EAF3FF;border-color:#CFE2FB;margin-left:40px}
+  .chat{display:flex;flex-direction:column;gap:10px}
+  .tabs{display:flex;gap:8px;margin-bottom:12px}
+  .tabs button{flex:1;padding:12px;border-radius:14px;background:#fff;border:2px solid var(--line);font-family:"Jua";font-size:17px}
+  .tabs button.on{background:var(--sky);color:#fff;border-color:var(--sky)}
+  .list{display:flex;flex-direction:column;gap:10px}
+  .item{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 14px}
+  .item.today{border-color:var(--sun)}
+  .heard{font-size:15px;color:var(--sky);margin-top:6px;min-height:20px}
+  .modal{position:fixed;inset:0;background:rgba(40,30,10,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:40}
+  .modal .card{max-width:440px;width:100%}
+  input[type=number],input[type=text]{font-size:20px;padding:10px 12px;border-radius:12px;border:2px solid var(--line);width:100%;font-family:inherit}
+  label.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;font-size:15px;line-height:1.5}
+  label.check input{width:22px;height:22px;margin-top:2px;flex-shrink:0}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  td,th{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+  .notice{background:#FFF1C2;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5}
+  .lock{font-size:80px}
+  .sr{position:absolute;left:-9999px}
+  .lvp{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 10px;margin-bottom:12px}
+  .lvp.compact{display:inline-flex;padding:4px 6px;margin:0;border-radius:12px}
+  .lvp-label{font-family:"Jua";font-size:15px;margin-right:4px}
+  .lvp-desc{flex-basis:100%;font-size:13px}
+  .lvb{font-family:"Fredoka";font-size:14px;padding:6px 10px;border-radius:10px;background:#F4EFE6;color:var(--soft)}
+  .lvp.compact .lvb{padding:4px 8px;font-size:13px}
+  .lvb.on{background:var(--plum);color:#fff}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* =====================================================================
+   1주차 콘텐츠 패키지 — "Good Morning!" (아침 시간)
+   난이도 1~5: 값이 [Lv1, Lv2, Lv3, Lv4, Lv5] 배열이면 단계별로 골라 씁니다.
+   매주 이 객체만 바꾸면 새 주제가 됩니다.
+   ===================================================================== */
+const LEVELS = [
+  {n:1, name:"기초", desc:"단어와 아주 짧은 문장"},
+  {n:2, name:"초급", desc:"기본 문장"},
+  {n:3, name:"중급", desc:"이어지는 문장, 이유 말하기"},
+  {n:4, name:"중상급", desc:"과거·미래, 조건, 감정 표현"},
+  {n:5, name:"고급", desc:"원어민이 실제로 쓰는 자연스러운 표현"}
+];
+const WEEK = {
+  id: "week01",
+  theme: "Good Morning!",
+  themeKo: "아침 시간",
+  song: {
+    title: "Good Morning Chant",
+    note: "실제 노래 음원은 다음 단계에서 추가합니다. 지금은 Pip이 박자에 맞춰 읽어 줘요.",
+    lines: [
+      {en:"Good morning, good morning!", emoji:"☀️", lv:1},
+      {en:"Wake up, wake up!", emoji:"⏰", lv:1},
+      {en:"Open your eyes,", emoji:"👀", lv:1},
+      {en:"Stretch up high!", emoji:"🙆", lv:1},
+      {en:"Brush, brush, brush your teeth,", emoji:"🪥", lv:2},
+      {en:"Wash, wash, wash your face,", emoji:"🧼", lv:2},
+      {en:"Eat your breakfast, yum, yum, yum!", emoji:"🥣", lv:3},
+      {en:"Put on your shoes, and out we run!", emoji:"👟", lv:4},
+      {en:"It's a brand-new day, let's have some fun!", emoji:"🌈", lv:5},
+      {en:"Good morning to you!", emoji:"👋", lv:1}
+    ]
+  },
+  /* 아들용 따라쟁이 단어 — 아들 수준에 맞춰 단계와 상관없이 고정 */
+  echo: [
+    {en:"Good morning!", emoji:"☀️", ko:"좋은 아침"},
+    {en:"Wake up!", emoji:"⏰", ko:"일어나"},
+    {en:"Milk!", emoji:"🥛", ko:"우유"},
+    {en:"Banana!", emoji:"🍌", ko:"바나나"},
+    {en:"Brush, brush!", emoji:"🪥", ko:"치카치카"},
+    {en:"Shoes!", emoji:"👟", ko:"신발"},
+    {en:"Bye-bye!", emoji:"👋", ko:"안녕"}
+  ],
+  /* 몸으로 반응 — 단계가 오르면 동작이 이어져요 (아들은 누나를 보고 따라 해요) */
+  moves: [
+    {emoji:"👃",
+     en:["Touch your nose!","Touch your nose and your ears!","Touch your nose, then touch your toes!","Touch your nose, clap twice, and turn around!","Touch your nose, spin around, and freeze like a statue!"],
+     ko:["코를 만져요","코랑 귀를 만져요","코를 만지고 발끝을 만져요","코 만지고, 박수 두 번, 한 바퀴!","코 만지고, 빙글 돌고, 동상처럼 멈춰!"]},
+    {emoji:"👏",
+     en:["Clap your hands!","Clap your hands three times!","Clap your hands and stomp your feet!","Clap your hands above your head, then behind your back!","Clap to the beat: slow, slow, fast, fast, slow!"],
+     ko:["손뼉 쳐요","손뼉 세 번","손뼉 치고 발 구르기","머리 위에서, 그다음 등 뒤에서 손뼉","박자대로: 느리게, 느리게, 빠르게, 빠르게, 느리게!"]},
+    {emoji:"🙆",
+     en:["Stretch up high!","Stretch up high like a tree!","Stretch up high, then touch the floor!","Stretch up as high as you can, and stand on your tiptoes!","Reach for the sky, then slowly roll down to the floor!"],
+     ko:["쭉 뻗어요","나무처럼 쭉","위로 쭉, 그다음 바닥 짚기","최대한 높이, 발끝으로 서기","하늘로 쭉, 그다음 천천히 바닥까지"]},
+    {emoji:"🥱",
+     en:["Yawn!","Yawn like a sleepy cat!","Yawn and rub your eyes!","Pretend you just woke up: yawn and rub your eyes!","Act like you overslept and you're in a big hurry!"],
+     ko:["하품해요","졸린 고양이처럼 하품","하품하고 눈 비비기","방금 깬 척: 하품하고 눈 비비기","늦잠 자서 엄청 급한 척 연기하기!"]},
+    {emoji:"🪥",
+     en:["Brush your teeth!","Brush your teeth up and down!","Brush your teeth, then wash your face!","Brush your teeth, rinse your mouth, and smile!","Show me your whole morning routine, step by step!"],
+     ko:["이 닦는 흉내","위아래로 이 닦기","이 닦고 세수하기","이 닦고, 헹구고, 활짝 웃기","아침 준비 전체를 순서대로 보여 줘!"]},
+    {emoji:"🦘",
+     en:["Jump!","Jump three times!","Jump like a frog!","Jump forward, then hop back on one foot!","Jump as high as you can and land without a sound!"],
+     ko:["점프","점프 세 번","개구리처럼 점프","앞으로 점프, 한 발로 뒤로 콩콩","최대한 높이 뛰고 소리 없이 착지!"]},
+    {emoji:"👋",
+     en:["Wave bye-bye!","Wave bye-bye with both hands!","Wave goodbye and blow a kiss!","Wave goodbye to everyone, one by one!","Give everyone a high five and say, \"Have a good one!\""],
+     ko:["손 흔들어요","두 손으로 안녕","손 흔들고 뽀뽀 날리기","한 명씩 돌아가며 안녕","모두와 하이파이브하고 \"좋은 하루!\""]}
+  ],
+  roleplay: {
+    title: "Pip's Breakfast Café",
+    titleKo: "Pip의 아침 식당 놀이",
+    roles: {pip:"Pip", daughter:"셰프 (딸)", dad:"손님 (아빠)", mom:"손님 (엄마)", son:"꼬마 손님 (아들)", all:"모두 함께"},
+    turns: [
+      {who:"pip", en:"Welcome to Pip's Breakfast Café!", ko:"Pip의 아침 식당에 오신 걸 환영해요!"},
+      {who:"daughter",
+       en:["Good morning! What would you like?","Good morning! What would you like to eat?","Good morning, sir! What can I get for you today?","Good morning and welcome! Are you ready to order?","Morning! Welcome in. What can I get started for you?"],
+       ko:["좋은 아침이에요! 뭐 드릴까요?","좋은 아침이에요! 뭐 드시겠어요?","좋은 아침이에요, 손님! 오늘 뭘 드릴까요?","좋은 아침, 어서 오세요! 주문하시겠어요?","안녕하세요! 어서 오세요. 뭐부터 준비해 드릴까요?"]},
+      {who:"dad",
+       en:["Good morning! Can I have some toast, please?","Can I have some toast and coffee, please?","I'd like some toast and a cup of coffee, please.","Yes, I'll have the toast with butter and a hot coffee, please.","I'll go with the toast, lightly buttered, and a black coffee, please."],
+       ko:["좋은 아침! 토스트 주시겠어요?","토스트랑 커피 주시겠어요?","토스트랑 커피 한 잔 주세요.","네, 버터 토스트랑 뜨거운 커피 주세요.","버터 살짝 바른 토스트랑 블랙커피로 할게요."]},
+      {who:"daughter",
+       en:["Here you are.","Here you are. Enjoy!","Here you are. Enjoy your breakfast!","Here's your toast and coffee. Be careful, it's hot!","Here you go. Careful, the coffee's piping hot!"],
+       ko:["여기 있어요.","여기 있어요. 맛있게 드세요!","여기 있어요. 아침 맛있게 드세요!","토스트랑 커피 나왔어요. 뜨거우니 조심하세요!","여기요. 커피가 아주 뜨거우니 조심하세요!"]},
+      {who:"dad",
+       en:["Thank you!","Thank you very much!","Thank you. It smells great!","Thanks! This looks delicious.","Thanks a lot! This hits the spot."],
+       ko:["고마워요!","정말 고마워요!","고마워요. 냄새 좋네요!","고마워요! 맛있어 보여요.","고마워요! 딱 먹고 싶던 거예요."]},
+      {who:"daughter",
+       en:["What would you like?","And what would you like, ma'am?","And what would you like for breakfast, ma'am?","And for you, ma'am? Have you decided yet?","And what can I get for you, ma'am?"],
+       ko:["뭐 드릴까요?","손님은 뭐 드릴까요?","손님은 아침으로 뭐 드시겠어요?","손님은요? 정하셨어요?","손님은 뭘 준비해 드릴까요?"]},
+      {who:"mom",
+       en:["I'd like an egg, please.","I'd like a fried egg, please.","Could I have a fried egg and some fruit, please?","I'd like two fried eggs, sunny side up, with a side of fruit.","I'll have the eggs, sunny side up, and a fruit cup on the side."],
+       ko:["달걀 주세요.","달걀 프라이 주세요.","달걀 프라이랑 과일 좀 주시겠어요?","반숙 달걀 프라이 두 개랑 과일 곁들여 주세요.","반숙 달걀이랑 과일 컵 곁들여 주세요."]},
+      {who:"daughter",
+       en:["Here you are.","Here you are. Enjoy!","Here you are. Enjoy your breakfast!","Here are your eggs and fruit. Enjoy!","Here you go. Enjoy!"],
+       ko:["여기 있어요.","여기 있어요. 맛있게 드세요!","여기 있어요. 아침 맛있게 드세요!","달걀이랑 과일 나왔어요. 맛있게 드세요!","여기요. 맛있게 드세요!"]},
+      {who:"mom",
+       en:["Thank you! It's yummy.","Thank you! It's so yummy.","Thank you! This is really delicious.","Thank you! The eggs are cooked perfectly.","Mmm, this is amazing. My compliments to the chef!"],
+       ko:["고마워요! 맛있어요.","고마워요! 정말 맛있어요.","고마워요! 진짜 맛있네요.","고마워요! 달걀이 딱 알맞게 익었어요.","음, 최고예요. 셰프님께 칭찬 전해 주세요!"]},
+      {who:"daughter",
+       en:["And you, little friend?","And what about you, little friend?","And what would you like, little friend?","And last but not least, what would you like, little friend?","And what can I get for our littlest customer?"],
+       ko:["꼬마 손님은요?","꼬마 손님은 뭐 드릴까요?","꼬마 손님은 뭐 드시겠어요?","마지막으로, 꼬마 손님은 뭐 드릴까요?","우리 제일 작은 손님은 뭘 드릴까요?"]},
+      {who:"son", en:"Banana!", ko:"바나나! (Milk!도 좋아요)", easy:true},
+      {who:"daughter", en:"Here you are!", ko:"여기 있어요!"},
+      {who:"son", en:"Thank you!", ko:"고마워요! (부모님이 같이 말해 주세요)", easy:true},
+      {who:"pip", en:"Yum yum! Have a great day, everyone!", ko:"냠냠! 모두 좋은 하루 보내요!"},
+      {who:"all", en:"Have a great day!", ko:"좋은 하루 보내요!"}
+    ]
+  },
+  story: {
+    title: "Pip's Big Morning",
+    pages: [
+      {emoji:"☀️🐥",
+       en:["The sun is up. Pip opens his eyes.","The sun is up. Pip opens his eyes and smiles.","The sun comes up over the hill, and Pip slowly opens his sleepy eyes.","One bright morning, the sun peeked through the window and woke Pip up.","The morning sun crept through the curtains and gently nudged Pip awake."],
+       ko:["해가 떴어요. Pip이 눈을 떠요.","해가 떴어요. Pip이 눈을 뜨고 웃어요.","해가 언덕 위로 떠오르고, Pip이 졸린 눈을 천천히 떠요.","어느 밝은 아침, 해님이 창문으로 들여다보며 Pip을 깨웠어요.","아침 햇살이 커튼 사이로 스며들어 Pip을 살며시 깨웠어요."]},
+      {emoji:"🥱",
+       en:["Pip yawns. Yaaawn! \"Good morning, sun!\"","Pip yawns and stretches. \"Good morning, sun!\"","Pip yawns a big yawn and stretches his little wings. \"Good morning, sun!\" he says.","Pip let out a huge yawn and stretched his wings as wide as he could. \"Good morning, sun!\" he chirped.","Pip let out an enormous yawn, stretched from wing to wing, and chirped, \"Morning, sunshine!\""],
+       ko:["Pip이 하품해요. \"좋은 아침, 해님!\"","Pip이 하품하고 기지개를 켜요. \"좋은 아침, 해님!\"","Pip이 크게 하품하고 작은 날개를 쭉 펴요. \"좋은 아침, 해님!\"","Pip은 크게 하품하고 날개를 최대한 넓게 폈어요. \"좋은 아침, 해님!\" 하고 짹짹거렸죠.","Pip은 엄청 크게 하품하고 양 날개를 쭉 편 다음 \"좋은 아침, 햇살아!\" 하고 짹짹거렸어요."]},
+      {emoji:"🪥",
+       en:["Pip brushes his teeth. Brush, brush, brush!","Pip brushes his teeth. Up and down, brush, brush!","Pip goes to the bathroom and brushes his teeth until they sparkle.","Then he hopped into the bathroom and brushed his teeth until they were sparkling clean.","Next, he hopped to the bathroom and brushed his teeth until they were squeaky clean."],
+       ko:["Pip이 이를 닦아요. 치카치카!","Pip이 이를 닦아요. 위아래로 치카치카!","Pip이 화장실에 가서 이가 반짝일 때까지 닦아요.","그다음 화장실로 콩콩 뛰어가 이가 반짝반짝해질 때까지 닦았어요.","다음엔 화장실로 콩콩 가서 이가 뽀드득할 때까지 닦았어요."]},
+      {emoji:"🍌🥛",
+       en:["Pip eats a banana. Pip drinks milk. Yum!","Pip eats a banana and drinks a glass of milk. Yum!","For breakfast, Pip eats a banana and drinks a big glass of milk.","For breakfast, he ate a ripe banana and drank a tall glass of cold milk.","Breakfast was a ripe banana and a tall glass of milk, which he gulped down in no time."],
+       ko:["바나나를 먹고 우유를 마셔요. 냠!","바나나를 먹고 우유 한 잔을 마셔요. 냠!","아침으로 Pip은 바나나를 먹고 우유를 큰 잔으로 마셔요.","아침으로 잘 익은 바나나를 먹고 차가운 우유를 한 잔 가득 마셨어요.","아침은 잘 익은 바나나와 우유 한 잔. 순식간에 꿀꺽 다 먹었어요."]},
+      {emoji:"👟",
+       en:["Pip puts on his shoes. One, two!","Pip puts on his red shoes. One, two!","Pip puts on his red shoes and grabs his little yellow bag.","After that, he put on his favorite red shoes and grabbed his yellow backpack.","Then he slipped on his favorite red sneakers and slung his yellow backpack over his shoulder."],
+       ko:["신발을 신어요. 하나, 둘!","빨간 신발을 신어요. 하나, 둘!","빨간 신발을 신고 작은 노란 가방을 챙겨요.","그다음 제일 좋아하는 빨간 신발을 신고 노란 가방을 챙겼어요.","그러고는 제일 좋아하는 빨간 운동화를 쓱 신고 노란 가방을 어깨에 둘러멨어요."]},
+      {emoji:"👋🌈",
+       en:["\"Bye-bye, Mommy! Have a great day!\"","\"Bye-bye, Mommy! See you later!\"","Pip waves at his mom. \"Bye-bye, Mommy! Have a great day!\"","\"Bye, Mom! I love you!\" Pip waved as he headed off to school.","\"Bye, Mom! Love you!\" Pip called out, waving as he skipped off to school."],
+       ko:["\"엄마 안녕! 좋은 하루 보내요!\"","\"엄마 안녕! 이따 봐요!\"","Pip이 엄마에게 손을 흔들어요. \"엄마 안녕! 좋은 하루 보내요!\"","\"엄마 안녕! 사랑해요!\" Pip은 손을 흔들며 학교로 출발했어요.","\"엄마 안녕! 사랑해요!\" Pip은 외치고는 손을 흔들며 신나게 학교로 갔어요."]}
+    ]
+  },
+  /* 딸 섀도잉 — 단계별 10문장 */
+  shadowing: {
+    1:[
+      {en:"Good morning! Did you sleep well?", ko:"좋은 아침! 잘 잤어?"},
+      {en:"I slept well, thank you.", ko:"잘 잤어, 고마워."},
+      {en:"What time is it?", ko:"몇 시야?"},
+      {en:"It's seven o'clock.", ko:"일곱 시야."},
+      {en:"Time to get up!", ko:"일어날 시간이야!"},
+      {en:"I'm still sleepy.", ko:"아직 졸려."},
+      {en:"Let's eat breakfast.", ko:"아침 먹자."},
+      {en:"I'd like some cereal, please.", ko:"시리얼 주세요."},
+      {en:"Don't forget your bag!", ko:"가방 잊지 마!"},
+      {en:"See you after school!", ko:"학교 끝나고 봐!"}],
+    2:[
+      {en:"Good morning! It's time to get up.", ko:"좋은 아침! 일어날 시간이야."},
+      {en:"Can you open the curtains, please?", ko:"커튼 좀 열어 줄래?"},
+      {en:"I had a funny dream last night.", ko:"어젯밤에 웃긴 꿈을 꿨어."},
+      {en:"What's for breakfast today?", ko:"오늘 아침 뭐야?"},
+      {en:"I want some toast with jam.", ko:"잼 바른 토스트 먹고 싶어."},
+      {en:"Can I have a glass of milk?", ko:"우유 한 잔 마셔도 돼?"},
+      {en:"I need to brush my teeth.", ko:"이 닦아야 해."},
+      {en:"Where are my socks?", ko:"내 양말 어디 있어?"},
+      {en:"It's cold outside today.", ko:"오늘 밖이 추워."},
+      {en:"Let's go, or we'll be late!", ko:"가자, 안 그러면 늦어!"}],
+    3:[
+      {en:"I'm still sleepy because I went to bed late.", ko:"늦게 자서 아직 졸려."},
+      {en:"Could you wake me up ten minutes earlier tomorrow?", ko:"내일 10분 일찍 깨워 줄 수 있어?"},
+      {en:"I'd rather have cereal than rice this morning.", ko:"오늘 아침은 밥보다 시리얼이 좋아."},
+      {en:"Don't forget to take your umbrella. It might rain.", ko:"우산 챙기는 거 잊지 마. 비 올지도 몰라."},
+      {en:"I can't find my hairband anywhere.", ko:"머리끈을 어디서도 못 찾겠어."},
+      {en:"Hurry up! The school bus is coming.", ko:"서둘러! 스쿨버스 온다."},
+      {en:"I already packed my bag last night.", ko:"어젯밤에 이미 가방 쌌어."},
+      {en:"Can you help me tie my shoelaces?", ko:"신발 끈 묶는 것 좀 도와줄래?"},
+      {en:"We have a math test today, so I'm a little nervous.", ko:"오늘 수학 시험이라 좀 긴장돼."},
+      {en:"I'll see you at dinner time.", ko:"저녁 시간에 봐."}],
+    4:[
+      {en:"I stayed up too late reading, so I'm exhausted.", ko:"늦게까지 책 읽어서 너무 피곤해."},
+      {en:"If I don't leave in five minutes, I'm going to miss the bus.", ko:"5분 안에 안 나가면 버스 놓칠 거야."},
+      {en:"I wish I could sleep a little longer on school days.", ko:"학교 가는 날 좀 더 잘 수 있으면 좋겠어."},
+      {en:"My teacher told us to bring colored pencils today.", ko:"선생님이 오늘 색연필 가져오라고 하셨어."},
+      {en:"I've been looking forward to the field trip all week.", ko:"일주일 내내 현장학습을 기다렸어."},
+      {en:"Would you mind checking if I have everything?", ko:"내가 다 챙겼는지 확인해 줄래?"},
+      {en:"I felt nervous yesterday, but today I feel ready.", ko:"어제는 긴장됐는데 오늘은 준비된 느낌이야."},
+      {en:"Breakfast is the most important meal of the day.", ko:"아침은 하루 중 가장 중요한 식사야."},
+      {en:"I'm going to practice the piano after school.", ko:"학교 끝나고 피아노 연습할 거야."},
+      {en:"Thanks for making breakfast. It was really good.", ko:"아침 만들어 줘서 고마워. 정말 맛있었어."}],
+    5:[
+      {en:"Rise and shine! You don't want to be late again.", ko:"일어나! 또 지각하면 안 되잖아."},
+      {en:"Five more minutes, please. I'm not a morning person.", ko:"5분만 더요. 저 아침형 인간이 아니에요."},
+      {en:"I overslept because my alarm didn't go off.", ko:"알람이 안 울려서 늦잠 잤어."},
+      {en:"Grab something to eat on the way out.", ko:"나가는 길에 뭐라도 챙겨 먹어."},
+      {en:"I'm running a bit behind this morning.", ko:"오늘 아침 좀 늦어지고 있어."},
+      {en:"Don't worry, I've got everything under control.", ko:"걱정 마, 다 알아서 하고 있어."},
+      {en:"It's freezing out there, so bundle up!", ko:"밖이 엄청 추우니까 따뜻하게 껴입어!"},
+      {en:"Let's make the most of this beautiful morning.", ko:"이 멋진 아침을 알차게 보내자."},
+      {en:"I'm so pumped for the school play today!", ko:"오늘 학교 연극이 너무 기대돼!"},
+      {en:"Catch you later! Have a good one!", ko:"이따 봐! 좋은 하루 보내!"}]
+  },
+  /* 딸 갈래형 대화 — 같은 흐름, 단계별 문장 */
+  dialogue: {
+    title: "Morning chat with Pip",
+    start: "hello",
+    nodes: {
+      hello:{
+        pip:["Good morning! Did you sleep well?","Good morning! Did you sleep well last night?","Good morning! You look sleepy. Did you sleep well?","Morning! How did you sleep? Did you have any dreams?","Morning, sunshine! How'd you sleep last night?"],
+        ko:["좋은 아침! 잘 잤어?","좋은 아침! 어젯밤에 잘 잤어?","좋은 아침! 졸려 보이네. 잘 잤어?","안녕! 잘 잤어? 꿈은 꿨어?","좋은 아침, 햇살아! 어젯밤 잘 잤어?"],
+        options:[
+          {en:["Yes, I slept well!","Yes, I slept very well.","Yes, I slept well, thanks.","I slept really well. I had a fun dream!","Like a baby! I feel great."], next:"breakfast"},
+          {en:["No, I'm still sleepy.","No, I'm still tired.","Not really. I went to bed late.","Not really. I kept waking up during the night.","Not great. I tossed and turned all night."], next:"sleepy"}]},
+      sleepy:{
+        pip:["Oh no! Let's stretch together. Stretch up high! Do you feel better?","Oh no! Let's stretch. Up high! Do you feel better now?","Oh no. Let's do some stretches to wake up. How do you feel now?","That's too bad. Maybe some stretching and fresh air will help. Feeling any better?","Aw, that's rough. A quick stretch might perk you up. Better?"],
+        ko:["이런! 같이 기지개 켜자. 좀 나아졌어?","이런! 쭉 펴자. 이제 좀 나아?","이런. 잠 깨게 스트레칭하자. 이제 어때?","안됐다. 스트레칭이랑 바깥 공기가 도움이 될 거야. 좀 나아졌어?","아이고, 힘들었겠다. 가볍게 스트레칭하면 기운 날 거야. 좀 나아?"],
+        options:[
+          {en:["Yes, I feel better!","Yes, I feel much better.","Yes, much better now.","Yes, I'm starting to wake up.","Yeah, I'm feeling more awake now."], next:"breakfast"},
+          {en:["A little bit.","Just a little.","A little, but I'm still tired.","A bit, but I could still use more sleep.","Kind of. I still need a few more minutes."], next:"breakfast"}]},
+      breakfast:{
+        pip:["What do you want for breakfast?","What do you want to eat for breakfast?","What would you like for breakfast today?","What sounds good for breakfast this morning?","So, what are you in the mood for this morning?"],
+        ko:["아침으로 뭐 먹고 싶어?","아침으로 뭐 먹고 싶어?","오늘 아침은 뭐 먹을래?","오늘 아침엔 뭐가 맛있을 것 같아?","그래서, 오늘 아침엔 뭐가 당겨?"],
+        options:[
+          {en:["I want toast.","I want toast with jam.","I'd like some toast with jam, please.","I think I'll have toast with peanut butter.","I'm in the mood for toast and scrambled eggs."], next:"drink"},
+          {en:["I want cereal.","I want cereal with milk.","I'd like a bowl of cereal, please.","Cereal sounds good, but not too much milk.","Just a bowl of cereal. Something quick."], next:"drink"},
+          {en:["I want rice and soup.","I want rice and egg soup.","I'd like rice and soup, please.","I feel like having rice and warm soup today.","Rice and soup would really hit the spot."], next:"drink"}]},
+      drink:{
+        pip:["Yummy! Do you want milk or juice?","Yummy! Do you want milk or orange juice?","Sounds yummy! Would you like milk or juice with that?","Good choice! What would you like to drink with it?","Nice pick! Anything to drink with that?"],
+        ko:["맛있겠다! 우유 마실래, 주스 마실래?","맛있겠다! 우유 마실래, 오렌지 주스 마실래?","맛있겠다! 같이 우유 마실래, 주스 마실래?","좋은 선택! 같이 뭐 마실래?","잘 골랐어! 같이 마실 건?"],
+        options:[
+          {en:["Milk, please.","Milk, please. Cold milk!","Milk, please. Thank you.","I'll have a glass of cold milk, please.","Just some milk would be great, thanks."], next:"school"},
+          {en:["Juice, please.","Orange juice, please.","Juice, please. Thank you.","Could I have some orange juice instead?","Orange juice, if we have any."], next:"school"}]},
+      school:{
+        pip:["What's your favorite class at school?","What's your favorite class at school?","What class are you excited about today?","Which class are you looking forward to today, and why?","What's on your schedule today? Anything fun?"],
+        ko:["학교에서 제일 좋아하는 과목은 뭐야?","학교에서 제일 좋아하는 과목은 뭐야?","오늘 어떤 수업이 기대돼?","오늘 어떤 수업이 기대되고, 왜 그래?","오늘 일정은 뭐야? 재밌는 거 있어?"],
+        options:[
+          {en:["I like English!","I like English class!","I'm excited about English class.","English, because we're doing a fun project.","We have English, and I'm giving a short presentation!"], next:"end"},
+          {en:["I like art.","I like art class.","I'm excited about art class.","Art, because I love drawing and painting.","Art class! We're finally finishing our paintings."], next:"end"},
+          {en:["I like P.E.","I like P.E. class.","I'm excited about P.E.","P.E., because we're playing dodgeball today.","P.E.! We're having a relay race today."], next:"end"}]},
+      end:{
+        pip:["Cool! Have a great day at school. See you later!","Cool! Have a great day at school. See you later!","That sounds great! Have a wonderful day at school.","That sounds amazing! Good luck, and tell me all about it later.","Awesome! You'll do great today. Catch you later!"],
+        ko:["멋지다! 학교에서 좋은 하루 보내. 나중에 봐!","멋지다! 학교에서 좋은 하루 보내. 나중에 봐!","좋겠다! 학교에서 멋진 하루 보내.","정말 멋지다! 잘하고, 나중에 다 얘기해 줘.","최고야! 오늘 잘할 거야. 이따 봐!"],
+        options:[
+          {en:["See you later, Pip!","See you later, Pip!","Thanks, Pip! See you later.","Thanks, Pip! I'll tell you everything later.","Thanks, Pip! Catch you later!"], next:null}]}
+    }
+  },
+  /* 아빠·엄마가 아이에게 쓸 문장 — 단계별 */
+  parentLines: {
+    1:[
+      {en:"Time to wake up!", ko:"일어날 시간이야!", tip:"커튼을 열면서 말해 보세요."},
+      {en:"Did you sleep well?", ko:"잘 잤어?", tip:"아이를 안아 주며 첫인사로."},
+      {en:"Let's brush your teeth.", ko:"이 닦자.", tip:"칫솔을 건네면서."},
+      {en:"Wash your face.", ko:"세수하자.", tip:"세면대 앞에서."},
+      {en:"What do you want for breakfast?", ko:"아침 뭐 먹을래?", tip:"딸에게는 대답도 영어로 유도해 보세요."},
+      {en:"Eat up!", ko:"다 먹자!", tip:"식탁에서 짧고 밝게."},
+      {en:"Put on your clothes.", ko:"옷 입자.", tip:"옷을 들어 보이며."},
+      {en:"Put on your shoes.", ko:"신발 신자.", tip:"현관에서 신발을 가리키며."},
+      {en:"Hurry up! We're late!", ko:"서둘러! 늦었어!", tip:"급할 때일수록 한 번만 영어로."},
+      {en:"Don't forget your bag.", ko:"가방 잊지 마.", tip:"딸이 나갈 때."},
+      {en:"Good job!", ko:"잘했어!", tip:"아이가 영어로 한마디라도 하면 꼭."},
+      {en:"Have a great day!", ko:"좋은 하루 보내!", tip:"헤어질 때 마지막 인사로."}],
+    2:[
+      {en:"Good morning, sweetie. Time to get up.", ko:"좋은 아침, 우리 아가. 일어날 시간이야.", tip:"부드럽게 등을 쓰다듬으며."},
+      {en:"Did you have a good dream?", ko:"좋은 꿈 꿨어?", tip:"딸에게 대답을 영어로 유도해 보세요."},
+      {en:"Go wash your face and brush your teeth.", ko:"가서 세수하고 이 닦아.", tip:"화장실을 가리키며."},
+      {en:"What would you like for breakfast?", ko:"아침으로 뭐 먹고 싶어?", tip:"선택지를 손가락으로 보여 주며."},
+      {en:"Drink your milk, please.", ko:"우유 마시자.", tip:"컵을 건네며."},
+      {en:"Let's get dressed.", ko:"옷 입자.", tip:"옷장 앞에서."},
+      {en:"Which shirt do you want to wear?", ko:"어떤 셔츠 입을래?", tip:"두 벌을 들어 보이며 고르게."},
+      {en:"Don't forget your water bottle.", ko:"물병 잊지 마.", tip:"물병을 건네며."},
+      {en:"We need to leave in five minutes.", ko:"5분 뒤에 나가야 해.", tip:"손가락 다섯 개를 펴 보이며."},
+      {en:"I love you. See you later!", ko:"사랑해. 이따 봐!", tip:"현관에서 꼭 안아 주며."}],
+    3:[
+      {en:"You look sleepy. Did you sleep okay?", ko:"졸려 보이네. 잘 잤어?", tip:"아이 표정을 보며."},
+      {en:"Can you put your pajamas in the laundry basket?", ko:"잠옷 빨래 바구니에 넣어 줄래?", tip:"바구니를 가리키며."},
+      {en:"Finish your breakfast before you watch TV.", ko:"TV 보기 전에 아침 다 먹자.", tip:"식탁에서."},
+      {en:"It's chilly today, so wear a jacket.", ko:"오늘 쌀쌀하니까 재킷 입어.", tip:"재킷을 건네며."},
+      {en:"Did you pack everything for school?", ko:"학교 준비물 다 챙겼어?", tip:"딸에게."},
+      {en:"Let me help you with your buttons.", ko:"단추 채우는 거 도와줄게.", tip:"아들 옷 입힐 때."},
+      {en:"Put your shoes on and wait by the door.", ko:"신발 신고 문 앞에서 기다려.", tip:"현관을 가리키며."},
+      {en:"We're running late, so let's hurry.", ko:"좀 늦었으니까 서두르자.", tip:"시계를 가리키며."},
+      {en:"Have fun at school and listen to your teacher.", ko:"학교에서 재밌게 놀고 선생님 말씀 잘 들어.", tip:"헤어질 때."},
+      {en:"I'll pick you up at three o'clock.", ko:"3시에 데리러 갈게.", tip:"손가락 세 개를 보이며."}],
+    4:[
+      {en:"If you get up now, we'll have time to play a little.", ko:"지금 일어나면 조금 놀 시간 있어.", tip:"일어나기 싫어할 때."},
+      {en:"I noticed you made your bed. Great job!", ko:"침대 정리한 거 봤어. 잘했어!", tip:"구체적으로 칭찬하기."},
+      {en:"What are you looking forward to today?", ko:"오늘 뭐가 기대돼?", tip:"아침 식탁에서 대화 열기."},
+      {en:"You can choose, but we only have ten minutes.", ko:"골라도 되는데 10분밖에 없어.", tip:"옷 고르기가 길어질 때."},
+      {en:"Remember to say thank you to the bus driver.", ko:"버스 기사님께 감사하다고 말하는 거 기억해.", tip:"딸이 나갈 때."},
+      {en:"If you feel nervous, just take a deep breath.", ko:"긴장되면 숨을 크게 쉬어 봐.", tip:"시험이나 발표 날."},
+      {en:"Let's check the weather before we decide what to wear.", ko:"뭐 입을지 정하기 전에 날씨 확인하자.", tip:"창밖을 같이 보며."},
+      {en:"I'm proud of you for getting ready by yourself.", ko:"혼자 준비해서 자랑스러워.", tip:"스스로 했을 때."},
+      {en:"Tell me about your day when you get home.", ko:"집에 오면 오늘 하루 얘기해 줘.", tip:"헤어질 때."},
+      {en:"Did you remember to bring your homework?", ko:"숙제 챙기는 거 기억했어?", tip:"현관에서."}],
+    5:[
+      {en:"Rise and shine, sleepyhead!", ko:"일어나, 잠꾸러기야!", tip:"밝고 장난스럽게."},
+      {en:"Let's get a move on. The clock is ticking.", ko:"이제 움직이자. 시간 가고 있어.", tip:"시계를 톡톡 치며."},
+      {en:"You've got this! Just do your best.", ko:"넌 할 수 있어! 최선만 다해.", tip:"중요한 날 아침에."},
+      {en:"Make sure you're all set before we head out.", ko:"나가기 전에 다 준비됐는지 확인해.", tip:"현관에서."},
+      {en:"No dawdling. We need to be out the door by eight.", ko:"꾸물대지 말자. 8시까지는 나가야 해.", tip:"단호하지만 웃으며."},
+      {en:"How about we race to see who gets dressed first?", ko:"누가 먼저 옷 입나 시합할까?", tip:"아이들이 늑장 부릴 때 놀이로."},
+      {en:"I know mornings are tough, but you're doing great.", ko:"아침이 힘든 거 알지만 잘하고 있어.", tip:"투정 부릴 때 공감하며."},
+      {en:"Let's not forget our manners at the table.", ko:"식탁 예절 잊지 말자.", tip:"식사 중에."},
+      {en:"Keep an eye on your little brother for me, okay?", ko:"동생 좀 봐 줄래?", tip:"딸에게 부탁할 때."},
+      {en:"Have a blast today, and I'll see you tonight!", ko:"오늘 신나게 보내고, 저녁에 봐!", tip:"헤어질 때."}]
+  }
+};
+
+/* 가족 20분 구성 (분) */
+const FAMILY_STAGES = [
+  {key:"song", name:"오늘의 노래", emoji:"🎵", min:3},
+  {key:"echo", name:"따라쟁이 + 몸으로", emoji:"🦜", min:5},
+  {key:"role", name:"가족 역할극", emoji:"🍳", min:7},
+  {key:"story", name:"잠자리 이야기", emoji:"🌙", min:5}
+];
+const PROFILES = [
+  {key:"son", name:"아들", face:"🧒", sub:"가족 시간에 함께해요"},
+  {key:"daughter", name:"딸", face:"👧", sub:"혼자 하루 30분까지"},
+  {key:"dad", name:"아빠", face:"👨", sub:"출퇴근 연습"},
+  {key:"mom", name:"엄마", face:"👩", sub:"출퇴근 연습"}
+];
+const DAUGHTER_LIMIT_MIN = 30;
+
+/* ===================== 저장소 (이 기기에만) ===================== */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem("fe_"+k); return v==null? d : JSON.parse(v);}catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem("fe_"+k, JSON.stringify(v)); }catch(e){} }
+};
+let memUsage = store.get("usage", {});
+function today(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function addUsage(profile, sec){
+  const t=today(); memUsage[t]=memUsage[t]||{}; memUsage[t][profile]=(memUsage[t][profile]||0)+sec; store.set("usage", memUsage);
+}
+function usageSec(profile, day){ return ((memUsage[day||today()]||{})[profile])||0; }
+function weekUsageSec(profile){
+  let s=0; for(let i=0;i<7;i++){ const d=new Date(); d.setDate(d.getDate()-i);
+    const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    s+=usageSec(profile,k);} return s;
+}
+let settings = store.get("settings", {rate:0.9, engine:"device"});
+if(!settings.levels) settings.levels = {family:1, daughter:1, dad:1, mom:1};
+function lv(k){ return Math.min(5, Math.max(1, settings.levels[k]||1)); }
+function setLv(k, n){ settings.levels[k]=n; store.set("settings", settings); }
+function pick(v, l){ return Array.isArray(v) ? v[Math.min(v.length, l)-1] : v; }
+const LV_TARGET_NAME = {family:"가족 시간", daughter:"딸", dad:"아빠", mom:"엄마"};
+function levelPicker(k, compact){
+  const cur=lv(k);
+  return `<div class="lvp ${compact?'compact':''}" data-lvk="${k}">
+    ${compact?'':`<span class="lvp-label">${LV_TARGET_NAME[k]} 난이도</span>`}
+    ${LEVELS.map(L=>`<button class="lvb ${L.n===cur?'on':''}" data-lvn="${L.n}" title="${L.name}: ${L.desc}">Lv${L.n}</button>`).join("")}
+    ${compact?'':`<span class="muted lvp-desc">${LEVELS[cur-1].name} · ${LEVELS[cur-1].desc}</span>`}
+  </div>`;
+}
+function bindLevelPickers(){
+  document.querySelectorAll(".lvp").forEach(p=>{
+    p.querySelectorAll("[data-lvn]").forEach(b=>b.onclick=()=>{
+      const k=p.dataset.lvk, n=+b.dataset.lvn; if(n===lv(k)) return;
+      stopSpeak(); setLv(k,n);
+      if(k==="daughter"){ S.chat=null; S.shIdx=0; S.showKo=false; }
+      render();
+    });
+  });
+}
+
+/* ===================== 음성 출력 ===================== */
+let claudeTTS = null, claudeDict = null;
+try{
+  if(window.claude && typeof window.claude.use==="function"){
+    const soft=()=>{ if(S.screen==="home"||S.screen==="dash") render(); };
+    window.claude.use("tts").then(t=>{claudeTTS=t; soft();}).catch(()=>{});
+    window.claude.use("dictation").then(d=>{claudeDict=d; soft();}).catch(()=>{});
+  }
+}catch(e){}
+
+let enVoice = null;
+function pickVoice(){
+  try{
+    const vs = speechSynthesis.getVoices().filter(v=>/^en(-|_)/i.test(v.lang));
+    const pref = ["Samantha","Google US English","Microsoft Aria","Microsoft Jenny","Karen","Daniel"];
+    enVoice = vs.find(v=>pref.some(p=>v.name.includes(p))) || vs.find(v=>/en-US/i.test(v.lang)) || vs[0] || null;
+  }catch(e){}
+}
+try{ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
+
+function setTalking(on){ document.querySelectorAll(".pip").forEach(p=>p.classList.toggle("talk", on)); }
+function speak(text, opts={}){
+  const rate = opts.rate || settings.rate;
+  setTalking(true);
+  const done = ()=>setTalking(false);
+  if(settings.engine==="claude" && claudeTTS){
+    return claudeTTS.speak(text,{rate:Math.max(0.7,Math.min(1.5,rate)), language:"en", voice:"airy"}).catch(()=>{}).finally(done);
+  }
+  return new Promise(res=>{
+    try{
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang="en-US"; if(enVoice) u.voice=enVoice; u.rate=rate; u.pitch=1.1;
+      u.onend=()=>{done();res();}; u.onerror=()=>{done();res();};
+      speechSynthesis.speak(u);
+      setTimeout(()=>{done();res();}, 2500 + text.length*120);
+    }catch(e){
+      if(claudeTTS){ claudeTTS.speak(text,{language:"en"}).catch(()=>{}).finally(()=>{done();res();}); }
+      else { done(); res(); }
+    }
+  });
+}
+function stopSpeak(){ try{speechSynthesis.cancel();}catch(e){} try{claudeTTS&&claudeTTS.stop();}catch(e){} setTalking(false); }
+
+/* ===================== 음성 입력 =====================
+   1) Claude dictation (크롬·데스크톱 앱)  2) 브라우저 음성 인식(앱을 별도 주소로 배포했을 때)  3) 없음 → 버튼  */
+const WebSR = window.SpeechRecognition || window.webkitSpeechRecognition;
+function canListen(){ return !!claudeDict || !!WebSR; }
+/* 반드시 클릭 핸들러에서 바로 호출 */
+function listenOnce(onPartial, maxMs=6000){
+  if(claudeDict){
+    return new Promise(resolve=>{
+      let text="", finished=false;
+      const finish=()=>{ if(finished) return; finished=true; resolve(text.trim()||null); };
+      try{
+        claudeDict.onPartial(({text:t})=>{ onPartial&&onPartial((text+" "+t).trim()); });
+        claudeDict.onFinal(({text:t})=>{ text+=" "+t; onPartial&&onPartial(text.trim()); });
+        claudeDict.onState(({state})=>{ if(state==="idle") finish(); });
+        claudeDict.start().catch(()=>finish());
+        setTimeout(()=>{ claudeDict.stop().catch(()=>{}).finally(finish); }, maxMs);
+      }catch(e){ finish(); }
+    });
+  }
+  if(WebSR){
+    return new Promise(resolve=>{
+      let text="", done=false;
+      try{
+        const r=new WebSR(); r.lang="en-US"; r.interimResults=true; r.maxAlternatives=1;
+        r.onresult=e=>{ let s=""; for(const res of e.results) s+=res[0].transcript; text=s; onPartial&&onPartial(s); };
+        r.onend=()=>{ if(!done){done=true; resolve(text.trim()||null);} };
+        r.onerror=()=>{ if(!done){done=true; resolve(text.trim()||null);} };
+        r.start(); setTimeout(()=>{ try{r.stop();}catch(e){} }, maxMs);
+      }catch(e){ resolve(null); }
+    });
+  }
+  return Promise.resolve(null);
+}
+/* 아들용: 소리만 감지 (기기 안에서만 처리, 저장 없음). 마이크를 못 쓰면 null */
+async function detectSound(ms=3500){
+  try{
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return null;
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const src = ctx.createMediaStreamSource(stream); const an = ctx.createAnalyser(); an.fftSize=512; src.connect(an);
+    const buf = new Uint8Array(an.fftSize); let heard=false; const t0=performance.now();
+    await new Promise(res=>{ (function loop(){
+      an.getByteTimeDomainData(buf); let sum=0; for(const v of buf){ const x=(v-128)/128; sum+=x*x; }
+      if(Math.sqrt(sum/buf.length)>0.08) heard=true;
+      if(heard || performance.now()-t0>ms) res(); else requestAnimationFrame(loop);
+    })(); });
+    stream.getTracks().forEach(t=>t.stop()); ctx.close();
+    return heard;
+  }catch(e){ return null; }
+}
+let micOK = null; // null 모름, true/false
+
+/* 말한 문장과 목표 문장 비교 → 0~1 */
+function norm(s){ return (s||"").toLowerCase().replace(/[^a-z0-9' ]/g," ").replace(/\s+/g," ").trim(); }
+function matchScore(said, target){
+  const a=norm(said).split(" ").filter(Boolean), b=norm(target).split(" ").filter(Boolean);
+  if(!b.length) return 0; let hit=0; const pool=[...a];
+  for(const w of b){ const i=pool.indexOf(w); if(i>=0){hit++; pool.splice(i,1);} }
+  return hit/b.length;
+}
+function starsFor(score){ return score>=0.85?3: score>=0.55?2: score>0?1:0; }
+
+/* ===================== 공통 UI ===================== */
+const $app = document.getElementById("app");
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function pipSVG(cls="bounce"){
+  return `<svg class="pip ${cls}" viewBox="0 0 120 120" aria-label="Pip">
+    <ellipse cx="60" cy="112" rx="30" ry="5" fill="#000" opacity=".08"/>
+    <path d="M58 14c-4-8 4-12 6-6 3-7 10-3 6 4" fill="none" stroke="#F5A300" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="60" cy="62" r="44" fill="#FFC83D"/>
+    <circle cx="60" cy="62" r="44" fill="url(#g)" opacity=".5"/>
+    <defs><radialGradient id="g" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#FFC83D" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="18" cy="70" rx="9" ry="14" fill="#F5B21C" transform="rotate(20 18 70)"/>
+    <ellipse cx="102" cy="70" rx="9" ry="14" fill="#F5B21C" transform="rotate(-20 102 70)"/>
+    <circle cx="45" cy="55" r="7" fill="#2B2A33"/><circle cx="75" cy="55" r="7" fill="#2B2A33"/>
+    <circle cx="47.5" cy="52.5" r="2.4" fill="#fff"/><circle cx="77.5" cy="52.5" r="2.4" fill="#fff"/>
+    <circle cx="36" cy="70" r="6" fill="#FF8FA0" opacity=".6"/><circle cx="84" cy="70" r="6" fill="#FF8FA0" opacity=".6"/>
+    <g class="beak" style="transform-origin:60px 70px"><path d="M52 67 L68 67 L60 78 Z" fill="#F57C00"/></g>
+  </svg>`;
+}
+function burst(x, y){
+  const em=["🎉","⭐","✨","💛","🌟"];
+  for(let i=0;i<12;i++){
+    const s=document.createElement("div"); s.className="burst"; s.textContent=em[i%em.length];
+    s.style.left=(x||innerWidth/2)+"px"; s.style.top=(y||innerHeight/2)+"px";
+    s.style.setProperty("--dx",(Math.random()*260-130)+"px"); s.style.setProperty("--dy",(Math.random()*-220-40)+"px");
+    document.body.appendChild(s); setTimeout(()=>s.remove(),1200);
+  }
+}
+const PRAISE = ["Great job!","Wonderful!","You did it!","Super!","Yay!","Awesome!"];
+function praise(){ const p=PRAISE[Math.floor(Math.random()*PRAISE.length)]; burst(); speak(p,{rate:1}); return p; }
+
+/* ===================== 상태 / 라우팅 ===================== */
+let S = { screen: store.get("consent", null) ? "home" : "consent" };
+let tick = null, tickProfile = null;
+function startTicking(profile){
+  stopTicking(); tickProfile = profile;
+  tick = setInterval(()=>{
+    if(document.hidden) return;
+    if(Array.isArray(profile)) profile.forEach(p=>addUsage(p,1)); else addUsage(profile,1);
+    if(S.screen==="family") updateFamilyTimer();
+    if(S.screen==="daughter" && usageSec("daughter")>=DAUGHTER_LIMIT_MIN*60){ S.screen="daughterLocked"; stopTicking(); stopSpeak(); render(); }
+    if(S.screen==="daughter") { const el=document.getElementById("dLeft"); if(el) el.textContent=daughterLeftText(); }
+  },1000);
+}
+function stopTicking(){ if(tick) clearInterval(tick); tick=null; tickProfile=null; }
+function go(screen, extra={}){ stopSpeak(); stopTicking(); S = Object.assign({screen}, extra); render(); window.scrollTo(0,0); }
+function topbar(title){ return `<div class="topbar"><button class="back" data-go="home">← 처음으로</button><h1>${title}</h1></div>`; }
+
+/* ===================== 화면: 부모 동의 ===================== */
+function viewConsent(){
+  return `
+  <div class="center" style="margin:10px 0 6px">${pipSVG()}</div>
+  <h1 class="ko-title center" style="font-size:28px;margin:6px 0">Pip과 함께 가족 영어</h1>
+  <p class="center muted">처음 한 번만, 보호자(법정대리인)의 동의가 필요해요.</p>
+  <div class="card" style="margin-top:14px">
+    <h2 class="ko-title" style="margin-top:0;font-size:20px">만 14세 미만 자녀 사용 동의</h2>
+    <div class="notice">이 앱은 아이의 이름, 사진, 학교, 주소 같은 개인정보를 <b>묻지도, 저장하지도 않습니다.</b><br>
+    사용 시간 기록만 <b>이 기기 안에</b> 저장되며, 서버로 보내지 않습니다.</div>
+    <label class="check"><input type="checkbox" class="cc"> 보호자로서 우리 아이(만 14세 미만)가 이 앱을 사용하는 데 동의합니다.</label>
+    <label class="check"><input type="checkbox" class="cc"> 음성 인식(말하기 확인)을 쓸 때는 소리가 브라우저의 음성 인식 서비스로 보내져 글자로 바뀔 수 있음을 이해합니다. 이 앱은 음성 녹음을 저장하지 않습니다.</label>
+    <label class="check"><input type="checkbox" class="cc"> 아들(만 4세)은 혼자 사용하지 않고, 가족 시간에 보호자와 함께 사용합니다.</label>
+    <button class="btn primary big" id="agree" style="width:100%;margin-top:8px" disabled>동의하고 시작하기</button>
+    <p class="muted center" style="margin-bottom:0">동의는 '부모 확인' 화면에서 언제든 철회할 수 있어요.</p>
+  </div>`;
+}
+function bindConsent(){
+  const cs=[...document.querySelectorAll(".cc")], b=document.getElementById("agree");
+  cs.forEach(c=>c.onchange=()=>{ b.disabled = !cs.every(x=>x.checked); });
+  b.onclick=()=>{ store.set("consent",{at:new Date().toISOString(), v:1}); go("home"); };
+}
+
+/* ===================== 화면: 홈 ===================== */
+function viewHome(){
+  const dLeft = Math.max(0, DAUGHTER_LIMIT_MIN - Math.floor(usageSec("daughter")/60));
+  return `
+  <div class="row" style="justify-content:space-between;margin-bottom:10px">
+    <div><span class="pill">이번 주 · ${esc(WEEK.themeKo)}</span>
+    <h1 class="en" style="font-size:30px;margin:6px 0 0">${esc(WEEK.theme)}</h1></div>
+    <button class="btn ghost" data-go="gate">🔒 부모 확인</button>
+  </div>
+  <button class="family-cta" data-go="family">
+    ${pipSVG()}
+    <div><h2>가족 영어 시간 🌙</h2><p>자기 전 20분 · 노래 → 따라쟁이 → 역할극 → 이야기</p>
+    <p class="muted" style="color:#6b4e00">Pip이 진행해요. 다 같이 따라만 오세요! · <b>Lv${lv('family')}</b></p></div>
+  </button>
+  <h2 class="ko-title" style="font-size:20px;margin:22px 0 10px">혼자 연습하기</h2>
+  <div class="grid g2">
+    <button class="profile" data-go="daughter">${PROFILES[1].face} 딸 <small>Lv${lv('daughter')} · 섀도잉 · Pip과 대화 · 오늘 ${dLeft}분 남음</small></button>
+    <button class="profile" data-go="parent" data-who="dad">${PROFILES[2].face} 아빠 <small>Lv${lv('dad')} · 오늘 아이에게 쓸 문장</small></button>
+    <button class="profile" data-go="parent" data-who="mom">${PROFILES[3].face} 엄마 <small>Lv${lv('mom')} · 오늘 아이에게 쓸 문장</small></button>
+    <div class="profile" style="opacity:.75">${PROFILES[0].face} 아들 <small>혼자 모드 없음 · 가족 시간에 만나요</small></div>
+  </div>`;
+}
+
+/* ===================== 화면: 가족 20분 ===================== */
+function familyStageElapsed(){ return Math.floor((Date.now()-S.stageStart)/1000); }
+function updateFamilyTimer(){
+  const st=FAMILY_STAGES[S.stage]; if(!st) return;
+  const el=document.getElementById("stTimer"), bar=document.getElementById("stBar");
+  const e=familyStageElapsed(), tot=st.min*60, left=Math.max(0,tot-e);
+  if(el) el.textContent = left>0 ? `남은 시간 ${Math.floor(left/60)}:${String(left%60).padStart(2,"0")}` : "⏰ 시간이 다 됐어요. 준비되면 다음으로!";
+  if(bar) bar.style.transform=`scaleX(${Math.min(1,e/tot)})`;
+}
+function viewFamily(){
+  const st = FAMILY_STAGES[S.stage];
+  if(!st) return viewFamilyEnd();
+  const bars = FAMILY_STAGES.map((x,i)=>`<div class="${i<S.stage?'done':i===S.stage?'now':''}">${i===S.stage?'<span id="stBar" style="transform:scaleX(0)"></span>':''}</div>`).join("");
+  let body = "";
+  if(st.key==="song") body = viewSong();
+  if(st.key==="echo") body = viewEcho();
+  if(st.key==="role") body = viewRole();
+  if(st.key==="story") body = viewStory();
+  return `${topbar("가족 영어 시간")}
+    <div class="stage-bar">${bars}</div>
+    <div class="row" style="justify-content:space-between">
+      <h2 class="stage-title">${st.emoji} ${S.stage+1}. ${st.name}</h2><span class="timer" id="stTimer"></span>
+    </div>
+    <div class="row" style="margin-top:8px"><span class="muted">난이도</span>${levelPicker('family',true)}</div>
+    <div style="margin-top:12px">${body}</div>
+    <div class="row" style="justify-content:space-between;margin-top:18px">
+      <button class="btn ghost" id="prevStage" ${S.stage===0?'disabled':''}>← 이전 단계</button>
+      <button class="btn blue" id="nextStage">${S.stage===FAMILY_STAGES.length-1?'마치기':'다음 단계 →'}</button>
+    </div>`;
+}
+function songLines(){ return WEEK.song.lines.filter(l=>l.lv<=lv('family')); }
+function viewSong(){
+  const L=songLines();
+  return `<div class="card center">
+    ${pipSVG()}
+    <div class="chant en" id="chant">${L.map((l,i)=>`<p id="cl${i}">${l.emoji} ${esc(l.en)}</p>`).join("")}</div>
+    <div class="row" style="justify-content:center;margin-top:10px">
+      <button class="btn primary big" id="singBtn">▶ 다 같이 부르기</button>
+    </div>
+    <p class="muted">두 번 불러요. 아들은 몸으로 따라 해도 충분해요. ${esc(WEEK.song.note)}</p></div>`;
+}
+async function singChant(){
+  const L=songLines(); const btn=document.getElementById("singBtn"); if(btn) btn.disabled=true;
+  for(let round=0; round<2; round++){
+    for(let i=0;i<L.length;i++){
+      if(S.screen!=="family"||FAMILY_STAGES[S.stage].key!=="song") return;
+      document.querySelectorAll(".chant p").forEach(p=>p.classList.remove("on"));
+      const el=document.getElementById("cl"+i); if(el) el.classList.add("on");
+      await speak(L[i].en,{rate:0.85});
+      await new Promise(r=>setTimeout(r,350));
+    }
+  }
+  document.querySelectorAll(".chant p").forEach(p=>p.classList.remove("on"));
+  const b=document.getElementById("singBtn"); if(b){ b.disabled=false; b.textContent="▶ 한 번 더"; }
+  burst();
+}
+function viewEcho(){
+  const fl=lv('family'); const items=[...WEEK.echo.map(x=>({...x,type:"echo"})), ...WEEK.moves.map(x=>({emoji:x.emoji,en:pick(x.en,fl),ko:pick(x.ko,fl),type:"move"}))];
+  S.echoItems = items; const i = S.echoIdx||0; const it = items[i];
+  const sisterFirst = it.type==="move" && i%3===0;
+  return `<div class="card center">
+    <div class="muted">${it.type==="echo"?"🦜 따라쟁이 게임: Pip이 말하면 따라 해요":"🤸 몸으로 반응: 듣고 움직여요"} · ${i+1}/${items.length}</div>
+    ${sisterFirst?'<div class="turn-who" style="margin-top:8px">👧 누나가 먼저 보여 줘요!</div>':''}
+    <div class="huge">${it.emoji}</div>
+    <div class="word en">${esc(it.en)}</div>
+    <div class="hint">${esc(it.ko)}</div>
+    <div id="echoZone" style="min-height:130px;margin-top:10px">
+      <button class="btn primary big" id="echoSay">🔊 Pip, 말해 줘!</button>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:6px">
+      <button class="btn ghost" id="echoPrev" ${i===0?'disabled':''}>←</button>
+      <button class="btn ghost" id="echoNext">${i===items.length-1?'처음부터':'다음 →'}</button>
+    </div></div>`;
+}
+async function runEcho(){
+  const it=S.echoItems[S.echoIdx||0]; const z=document.getElementById("echoZone");
+  z.innerHTML=`${pipSVG("talk")}`;
+  await speak(it.en,{rate:0.8});
+  await new Promise(r=>setTimeout(r,200));
+  await speak(it.type==="echo"?"Your turn!":"Let's do it!",{rate:1});
+  if(!document.getElementById("echoZone")) return;
+  // 소리 감지가 가능하면 자동, 아니면 부모님이 눌러 주기
+  z.innerHTML = `<div class="listen-ring">${it.type==="echo"?"👂":"🤸"}</div>
+    <div class="muted">${it.type==="echo"?"따라 말하면 부모님이 눌러 주세요":"움직였으면 눌러 주세요"}</div>
+    <div class="row" style="justify-content:center;margin-top:8px">
+      <button class="btn green big" id="echoDid">🎉 했어요!</button>
+      <button class="btn ghost" id="echoAgain">🔁 한 번 더 듣기</button></div>`;
+  document.getElementById("echoDid").onclick=e=>{ burst(e.clientX,e.clientY); praise(); z.innerHTML=`<div class="huge">🌟</div>`; setTimeout(()=>{ nextEcho(); }, 1400); };
+  document.getElementById("echoAgain").onclick=()=>runEcho();
+  if(it.type==="echo" && micOK!==false){
+    const r = await detectSound(3500);
+    if(r===null){ micOK=false; return; }
+    micOK=true;
+    if(r && document.getElementById("echoDid")) document.getElementById("echoDid").click();
+  }
+}
+function nextEcho(){ S.echoIdx = ((S.echoIdx||0)+1) % S.echoItems.length; render(); }
+function viewRole(){
+  const R=WEEK.roleplay; const i=S.roleIdx||0; const t0=R.turns[i]; const t={...t0,en:pick(t0.en,lv('family')),ko:pick(t0.ko,lv('family'))};
+  const faces={pip:"🐥",daughter:"👧",dad:"👨",mom:"👩",son:"🧒",all:"👨‍👩‍👧‍👦"};
+  const isPip = t.who==="pip";
+  return `<div class="card center">
+    <div class="muted">${esc(R.titleKo)} · ${i+1}/${R.turns.length}</div>
+    ${i===0?`<div class="notice" style="margin:10px 0;text-align:left">역할: 👧 딸은 셰프, 👨 아빠와 👩 엄마는 손님, 🧒 아들은 꼬마 손님이에요. 차례가 되면 Pip이 먼저 말해 주고, 따라 말하면 돼요.</div>`:''}
+    <div style="font-size:64px;margin-top:6px">${faces[t.who]}</div>
+    <div class="turn-who">${esc(R.roles[t.who])}${isPip?'':' 차례!'}</div>
+    <div class="line-big en">${esc(t.en)}</div>
+    <div class="hint">${esc(t.ko)}</div>
+    <div id="roleZone" style="margin-top:12px">
+      <div class="row" style="justify-content:center">
+        <button class="btn primary" id="roleListen">🔊 ${isPip?'Pip이 말해요':'먼저 들어 보기'}</button>
+        ${!isPip && canListen() && !t.easy ? `<button class="btn blue" id="roleSpeak">🎤 말하기</button>`:''}
+        ${!isPip?`<button class="btn green" id="roleDone">✅ 말했어요</button>`:''}
+      </div>
+      <div class="heard" id="roleHeard"></div>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:10px">
+      <button class="btn ghost" id="rolePrev" ${i===0?'disabled':''}>←</button>
+      <button class="btn ghost" id="roleNext">${i===R.turns.length-1?'처음부터 다시':'다음 →'}</button>
+    </div></div>`;
+}
+function viewStory(){
+  const P=WEEK.story.pages; const i=S.storyIdx||0; const p0=P[i]; const p={emoji:p0.emoji,en:pick(p0.en,lv('family')),ko:pick(p0.ko,lv('family'))};
+  return `<div class="card center" style="background:#F6F1FF;border-color:#E4DAFB">
+    <div class="muted">${esc(WEEK.story.title)} · ${i+1}/${P.length}</div>
+    <div class="huge" style="margin:8px 0">${p.emoji}</div>
+    <div class="line-big en">${esc(p.en)}</div>
+    <div class="hint">${esc(p.ko)}</div>
+    <div class="row" style="justify-content:center;margin-top:12px">
+      <button class="btn primary" id="storyRead">🔊 Pip이 읽어요</button>
+    </div>
+    <p class="muted">Pip이 읽은 뒤에 아빠나 엄마가 한 번 더 천천히 읽어 주세요. 아이들은 듣기만 해도 돼요.</p>
+    <div class="row" style="justify-content:center">
+      <button class="btn ghost" id="storyPrev" ${i===0?'disabled':''}>← 이전 장</button>
+      <button class="btn ghost" id="storyNext" ${i===P.length-1?'disabled':''}>다음 장 →</button>
+    </div></div>`;
+}
+function viewFamilyEnd(){
+  return `${topbar("가족 영어 시간")}
+  <div class="card center">${pipSVG()}
+    <h2 class="ko-title" style="font-size:26px">오늘도 해냈어요! 🌙</h2>
+    <p class="en" style="font-size:24px">Good night, everyone!</p>
+    <p class="muted">내일 아침엔 아빠, 엄마가 <b>"Good morning! Did you sleep well?"</b> 하고 깨워 주세요.</p>
+    <button class="btn primary big" data-go="home">처음으로</button></div>`;
+}
+function bindFamily(){
+  updateFamilyTimer();
+  const st=FAMILY_STAGES[S.stage];
+  const nx=document.getElementById("nextStage"), pv=document.getElementById("prevStage");
+  if(nx) nx.onclick=()=>{ stopSpeak(); S.stage++; S.stageStart=Date.now(); render(); if(S.stage===FAMILY_STAGES.length){ stopTicking(); burst(); speak("Good night, everyone!"); } };
+  if(pv) pv.onclick=()=>{ stopSpeak(); S.stage=Math.max(0,S.stage-1); S.stageStart=Date.now(); render(); };
+  if(!st) return;
+  if(st.key==="song"){ document.getElementById("singBtn").onclick=singChant; }
+  if(st.key==="echo"){
+    document.getElementById("echoSay").onclick=runEcho;
+    document.getElementById("echoNext").onclick=()=>{ stopSpeak(); nextEcho(); };
+    document.getElementById("echoPrev").onclick=()=>{ stopSpeak(); S.echoIdx=Math.max(0,(S.echoIdx||0)-1); render(); };
+  }
+  if(st.key==="role"){
+    const R=WEEK.roleplay, t0=R.turns[S.roleIdx||0], t={...t0,en:pick(t0.en,lv('family'))};
+    document.getElementById("roleListen").onclick=()=>speak(t.en,{rate: t.who==="pip"?1:0.85});
+    const sp=document.getElementById("roleSpeak");
+    if(sp) sp.onclick=()=>{
+      const h=document.getElementById("roleHeard"); h.textContent="듣고 있어요…";
+      listenOnce(x=>{h.textContent="🎤 "+x;}).then(said=>{
+        if(!said){ h.textContent="잘 못 들었어요. 한 번 더 하거나 '말했어요'를 눌러요."; return; }
+        const sc=matchScore(said,t.en); h.innerHTML=`🎤 "${esc(said)}" <span class="stars">${"⭐".repeat(Math.max(1,starsFor(sc)))}</span>`;
+        if(sc>=0.55){ praise(); }
+      });
+    };
+    const dn=document.getElementById("roleDone"); if(dn) dn.onclick=e=>{ burst(e.clientX,e.clientY); praise(); setTimeout(()=>{ S.roleIdx=((S.roleIdx||0)+1)%R.turns.length; render(); },900); };
+    document.getElementById("roleNext").onclick=()=>{ stopSpeak(); S.roleIdx=((S.roleIdx||0)+1)%R.turns.length; render(); };
+    document.getElementById("rolePrev").onclick=()=>{ stopSpeak(); S.roleIdx=Math.max(0,(S.roleIdx||0)-1); render(); };
+  }
+  if(st.key==="story"){
+    const p={en:pick(WEEK.story.pages[S.storyIdx||0].en,lv('family'))};
+    document.getElementById("storyRead").onclick=()=>speak(p.en.replace(/"/g,""),{rate:0.8});
+    document.getElementById("storyNext").onclick=()=>{ stopSpeak(); S.storyIdx=(S.storyIdx||0)+1; render(); };
+    document.getElementById("storyPrev").onclick=()=>{ stopSpeak(); S.storyIdx=Math.max(0,(S.storyIdx||0)-1); render(); };
+  }
+}
+
+/* ===================== 화면: 딸 혼자 ===================== */
+function daughterLeftText(){ const l=Math.max(0,DAUGHTER_LIMIT_MIN*60-usageSec("daughter")); return `오늘 남은 시간 ${Math.floor(l/60)}분 ${l%60}초`; }
+function viewDaughter(){
+  const tab=S.tab||"shadow";
+  return `${topbar("👧 딸의 영어 연습")}
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="pill">${esc(WEEK.theme)}</span><span class="timer" id="dLeft">${daughterLeftText()}</span></div>
+    ${levelPicker('daughter')}
+    <div class="tabs"><button class="${tab==='shadow'?'on':''}" data-tab="shadow">🎧 섀도잉</button><button class="${tab==='chat'?'on':''}" data-tab="chat">💬 Pip과 대화</button></div>
+    ${tab==="shadow"?viewShadow():viewChat()}
+    ${!canListen()?`<p class="notice" style="margin-top:14px">이 브라우저에서는 말하기 확인(음성 인식)을 쓸 수 없어서, 듣고 따라 말한 뒤 스스로 체크하는 방식으로 진행돼요.</p>`:''}`;
+}
+function viewShadow(){
+  const L=WEEK.shadowing[lv('daughter')]; const i=S.shIdx||0; const s=L[i]; const showKo=S.showKo;
+  const best=(store.get("shadowStars_"+lv('daughter'),{}))[i]||0;
+  return `<div class="card center">
+    <div class="muted">${i+1}/${L.length} · 듣기 → 따라 말하기</div>
+    <div class="line-big en" style="margin-top:10px">${esc(s.en)}</div>
+    <div class="hint" style="min-height:22px">${showKo?esc(s.ko):'<button class="btn ghost" id="koBtn" style="padding:4px 10px;font-size:13px">뜻 보기</button>'}</div>
+    <div class="row" style="justify-content:center;margin-top:12px">
+      <button class="btn primary" id="shListen">🔊 듣기</button>
+      <button class="btn ghost" id="shSlow">🐢 천천히</button>
+      ${canListen()?'<button class="btn blue" id="shSpeak">🎤 따라 말하기</button>':'<button class="btn green" id="shSelf">✅ 따라 했어요</button>'}
+    </div>
+    <div class="heard" id="shHeard"></div>
+    <div class="stars" id="shStars" title="최고 기록">${"⭐".repeat(best)}${"☆".repeat(3-best)}</div>
+    <div class="row" style="justify-content:center;margin-top:8px">
+      <button class="btn ghost" id="shPrev" ${i===0?'disabled':''}>← 이전</button>
+      <button class="btn ghost" id="shNext" ${i===L.length-1?'disabled':''}>다음 →</button>
+    </div></div>`;
+}
+function dnode(key, l){ const n=WEEK.dialogue.nodes[key]; if(!n) return null; l=l||lv('daughter'); return {pip:pick(n.pip,l), ko:pick(n.ko,l), options:n.options.map(o=>({en:pick(o.en,l), next:o.next}))}; }
+function viewChat(){
+  const D=WEEK.dialogue; if(!S.chat) S.chat={node:D.start, log:[]};
+  const node = S.chat.node ? dnode(S.chat.node) : null;
+  const log = S.chat.log.map(m=>`<div class="bubble ${m.me?'me':''} en">${m.me?'🙋 ':'🐥 '}${esc(m.text)}</div>`).join("");
+  return `<div class="card">
+    <div class="row">${pipSVG()}<div><div class="ko-title" style="font-size:20px">${esc(D.title)}</div><div class="muted">Pip이 물어보면 아래 대답 중 하나를 골라 말해 봐요.</div></div></div>
+    <div class="chat" style="margin-top:10px">${log}
+      ${node?`<div class="bubble en">🐥 ${esc(node.pip)}<div class="hint" style="font-family:'Gowun Dodum'">${S.showKo?esc(node.ko):''}</div></div>`:''}
+    </div>
+    ${node?`
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="chListen">🔊 다시 듣기</button>
+      ${canListen()?'<button class="btn blue" id="chSpeak">🎤 말해서 대답하기</button>':''}
+      <button class="btn ghost" id="chKo">${S.showKo?'뜻 숨기기':'뜻 보기'}</button></div>
+      <div class="heard" id="chHeard"></div>
+      <div class="chips">${node.options.map((o,k)=>`<button class="chip en" data-opt="${k}">${esc(o.en)}</button>`).join("")}</div>`
+    :`<div class="center" style="margin-top:12px"><div class="huge">🏆</div><p class="ko-title" style="font-size:22px">대화 완성!</p><button class="btn primary" id="chRestart">다시 하기</button></div>`}
+  </div>`;
+}
+function chatAnswer(k){
+  const node=dnode(S.chat.node); const o=node.options[k];
+  S.chat.log.push({me:false,text:node.pip}); S.chat.log.push({me:true,text:o.en});
+  S.chat.node=o.next; render();
+  if(o.next){ const n=dnode(o.next); setTimeout(()=>speak(n.pip),300); } else { burst(); speak("Great talking with you! Bye-bye!"); }
+}
+function bindDaughter(){
+  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{ stopSpeak(); S.tab=b.dataset.tab; render(); });
+  if((S.tab||"shadow")==="shadow"){
+    const L=WEEK.shadowing[lv('daughter')], i=S.shIdx||0, s=L[i], SK="shadowStars_"+lv('daughter');
+    const kb=document.getElementById("koBtn"); if(kb) kb.onclick=()=>{ S.showKo=true; render(); };
+    document.getElementById("shListen").onclick=()=>speak(s.en,{rate:0.95});
+    document.getElementById("shSlow").onclick=()=>speak(s.en,{rate:0.7});
+    const saveStars=n=>{ const st=store.get(SK,{}); st[i]=Math.max(st[i]||0,n); store.set(SK,st); document.getElementById("shStars").textContent="⭐".repeat(st[i])+"☆".repeat(3-st[i]); };
+    const sp=document.getElementById("shSpeak");
+    if(sp) sp.onclick=()=>{
+      const h=document.getElementById("shHeard"); h.textContent="듣고 있어요… 말해 보세요!";
+      listenOnce(x=>{h.textContent="🎤 "+x;}).then(said=>{
+        if(!said){ h.textContent="잘 못 들었어요. 한 번 더!"; return; }
+        const sc=matchScore(said,s.en), n=starsFor(sc);
+        h.innerHTML=`🎤 "${esc(said)}" → ${n===3?"완벽해요!":n===2?"거의 다 왔어요!":"한 번 더 들어 보고 해 볼까?"}`;
+        saveStars(n); if(n>=2) praise();
+      });
+    };
+    const sf=document.getElementById("shSelf"); if(sf) sf.onclick=e=>{ saveStars(2); burst(e.clientX,e.clientY); praise(); };
+    document.getElementById("shNext").onclick=()=>{ stopSpeak(); S.shIdx=i+1; S.showKo=false; render(); };
+    document.getElementById("shPrev").onclick=()=>{ stopSpeak(); S.shIdx=i-1; S.showKo=false; render(); };
+  } else {
+    const node = S.chat && S.chat.node ? dnode(S.chat.node) : null;
+    if(node){
+      document.getElementById("chListen").onclick=()=>speak(node.pip);
+      document.getElementById("chKo").onclick=()=>{ S.showKo=!S.showKo; render(); };
+      document.querySelectorAll("[data-opt]").forEach(b=>b.onclick=()=>chatAnswer(+b.dataset.opt));
+      const sp=document.getElementById("chSpeak");
+      if(sp) sp.onclick=()=>{
+        const h=document.getElementById("chHeard"); h.textContent="듣고 있어요…";
+        listenOnce(x=>{h.textContent="🎤 "+x;}).then(said=>{
+          if(!said){ h.textContent="잘 못 들었어요. 다시 말하거나 버튼을 눌러요."; return; }
+          let best=-1,bs=0; node.options.forEach((o,k)=>{ const sc=matchScore(said,o.en); if(sc>bs){bs=sc;best=k;} });
+          if(best>=0 && bs>=0.5){ praise(); setTimeout(()=>chatAnswer(best),900); }
+          else h.textContent=`🎤 "${said}" — 아래 대답 중 하나로 다시 말해 볼까?`;
+        });
+      };
+    } else {
+      document.getElementById("chRestart").onclick=()=>{ S.chat=null; render(); };
+    }
+  }
+}
+function viewDaughterLocked(){
+  return `${topbar("👧 딸의 영어 연습")}
+  <div class="card center"><div class="lock">🌙</div><h2 class="ko-title" style="font-size:24px">오늘은 여기까지!</h2>
+  <p>하루 ${DAUGHTER_LIMIT_MIN}분을 다 썼어요. 정말 잘했어요.<br>저녁 가족 시간에 오늘 배운 문장을 써 봐요!</p>
+  <p class="en" style="font-size:22px">See you tomorrow!</p>
+  <button class="btn primary" data-go="home">처음으로</button></div>`;
+}
+
+/* ===================== 화면: 아빠·엄마 출퇴근 ===================== */
+function PL(who){ return WEEK.parentLines[lv(who)]; }
+function todaysParentIdx(who){ const n=PL(who).length; const d=new Date().getDay(); return [0,1,2].map(k=>(d*3+k)%n); }
+function viewParent(){
+  const who=S.who||"dad", name=who==="dad"?"👨 아빠":"👩 엄마";
+  const idx=todaysParentIdx(who); const L=PL(who); const reps=store.get("reps_"+who+"_L"+lv(who)+"_"+today(),{});
+  const item=(l,i,isToday)=>`<div class="item ${isToday?'today':''}">
+      <div class="row" style="justify-content:space-between"><div class="en" style="font-size:21px">${esc(l.en)}</div><span class="pill">${reps[i]||0}/3회</span></div>
+      <div>${esc(l.ko)} ${l.tip?`<span class="muted">· ${esc(l.tip)}</span>`:''}</div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ghost" data-pl="${i}" data-r="1">🔊 듣기</button>
+        <button class="btn ghost" data-pl="${i}" data-r="0.7">🐢 천천히</button>
+        ${canListen()?`<button class="btn blue" data-ps="${i}">🎤 말하기</button>`:`<button class="btn green" data-pd="${i}">✅ 소리 내 말했어요</button>`}
+      </div><div class="heard" id="ph${i}"></div></div>`;
+  return `${topbar(name+"의 출퇴근 연습")}
+    ${levelPicker(who)}
+    <div class="notice">오늘 아이에게 써 볼 문장 3개예요. 출퇴근길에 <b>소리 내서 3번씩</b> 말해 보고, 집에서 실제로 아이에게 써 보세요. 그게 아이에게 가장 좋은 영어 듣기예요.</div>
+    <h2 class="ko-title" style="font-size:20px;margin:16px 0 8px">⭐ 오늘의 문장</h2>
+    <div class="list">${idx.map(i=>item(L[i],i,true)).join("")}</div>
+    <h2 class="ko-title" style="font-size:20px;margin:20px 0 8px">이번 주 전체 문장</h2>
+    <div class="list">${L.map((l,i)=>idx.includes(i)?'':item(l,i,false)).join("")}</div>`;
+}
+function bindParent(){
+  const who=S.who||"dad"; const key="reps_"+who+"_L"+lv(who)+"_"+today(); const L=PL(who);
+  const bump=i=>{ const r=store.get(key,{}); r[i]=Math.min(3,(r[i]||0)+1); store.set(key,r); if(r[i]===3){burst();} render(); };
+  document.querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>speak(L[+b.dataset.pl].en,{rate:+b.dataset.r}));
+  document.querySelectorAll("[data-pd]").forEach(b=>b.onclick=()=>bump(+b.dataset.pd));
+  document.querySelectorAll("[data-ps]").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.ps, h=document.getElementById("ph"+i); h.textContent="듣고 있어요…";
+    listenOnce(x=>{h.textContent="🎤 "+x;}).then(said=>{
+      if(!said){ h.textContent="잘 못 들었어요. 한 번 더!"; return; }
+      const sc=matchScore(said,L[i].en);
+      if(sc>=0.6){ h.textContent=`🎤 "${said}" 좋아요! ✔`; setTimeout(()=>bump(i),700); }
+      else h.textContent=`🎤 "${said}" — 🐢 천천히 듣기로 한 번 더 들어 보세요.`;
+    });
+  });
+}
+
+/* ===================== 화면: 부모 확인 ===================== */
+function viewGate(){
+  if(!S.q){ const a=12+Math.floor(Math.random()*8), b=6+Math.floor(Math.random()*4); S.q={a,b}; }
+  return `${topbar("🔒 부모 확인")}
+  <div class="card center"><p>보호자 확인을 위해 계산해 주세요.</p>
+  <p class="en" style="font-size:34px">${S.q.a} × ${S.q.b} = ?</p>
+  <input type="number" id="gateIn" inputmode="numeric" style="max-width:200px;text-align:center">
+  <div style="margin-top:12px"><button class="btn primary" id="gateOk">확인</button></div>
+  <div class="heard" id="gateMsg"></div></div>`;
+}
+function bindGate(){
+  const ok=()=>{ const v=+document.getElementById("gateIn").value; if(v===S.q.a*S.q.b) go("dash"); else { document.getElementById("gateMsg").textContent="다시 계산해 주세요."; } };
+  document.getElementById("gateOk").onclick=ok;
+  document.getElementById("gateIn").onkeydown=e=>{ if(e.key==="Enter") ok(); };
+}
+function fmtMin(s){ return Math.round(s/60)+"분"; }
+function viewDash(){
+  const rows=[["family","👨‍👩‍👧‍👦 가족 시간"],["daughter","👧 딸 (혼자)"],["dad","👨 아빠"],["mom","👩 엄마"]].map(([k,n])=>`<tr><td>${n}</td><td>${fmtMin(usageSec(k))}</td><td>${fmtMin(weekUsageSec(k))}</td></tr>`).join("");
+  const consent=store.get("consent",null);
+  const W=WEEK, fl=lv('family'), dl=lv('daughter');
+  return `${topbar("🔒 부모 확인")}
+  <div class="card"><h2 class="ko-title" style="margin-top:0;font-size:20px">사용 시간</h2>
+    <table><tr><th></th><th>오늘</th><th>최근 7일</th></tr>${rows}</table>
+    <p class="muted">딸 혼자 사용은 하루 ${DAUGHTER_LIMIT_MIN}분으로 제한돼요. 기록은 이 기기에만 저장돼요.</p></div>
+  <div class="card" style="margin-top:14px"><h2 class="ko-title" style="margin-top:0;font-size:20px">난이도</h2>
+    <p class="muted" style="margin-top:0">사람마다 따로 정해요. 아들의 따라쟁이 단어는 단계와 상관없이 쉽게 유지돼요.</p>
+    ${levelPicker('family')}${levelPicker('daughter')}${levelPicker('dad')}${levelPicker('mom')}
+  </div>
+  <div class="card" style="margin-top:14px"><h2 class="ko-title" style="margin-top:0;font-size:20px">이번 주 패키지 미리 보기 · ${esc(W.theme)}</h2>
+    <p class="muted">지금 정한 난이도로 아이에게 나가는 문장이에요. 이상한 표현이 있으면 Claude에게 고쳐 달라고 해 주세요.</p>
+    <details><summary>🎵 노래 · 가족 Lv${fl} (${songLines().length}줄)</summary><p class="en">${songLines().map(l=>esc(l.en)).join("<br>")}</p></details>
+    <details><summary>🦜 따라쟁이 · 🤸 몸 반응 · 가족 Lv${fl}</summary><p class="en">${W.echo.map(l=>esc(l.en)).join(" · ")}<br>${W.moves.map(m=>esc(pick(m.en,fl))).join("<br>")}</p></details>
+    <details><summary>🍳 역할극 · 가족 Lv${fl} (${W.roleplay.turns.length}턴)</summary><p>${W.roleplay.turns.map(t=>`<b>${esc(W.roleplay.roles[t.who])}</b>: <span class="en">${esc(pick(t.en,fl))}</span>`).join("<br>")}</p></details>
+    <details><summary>🌙 이야기 · 가족 Lv${fl} (${W.story.pages.length}장)</summary><p class="en">${W.story.pages.map(p=>esc(pick(p.en,fl))).join("<br>")}</p></details>
+    <details><summary>🎧 딸 섀도잉 · Lv${dl} (${W.shadowing[dl].length}문장)</summary><p class="en">${W.shadowing[dl].map(p=>esc(p.en)).join("<br>")}</p></details>
+    <details><summary>💬 딸 대화 · Lv${dl} (${Object.keys(W.dialogue.nodes).length}장면)</summary><p class="en">${Object.keys(W.dialogue.nodes).map(k=>{const n=dnode(k,dl); return "🐥 "+esc(n.pip)+"<br>"+n.options.map(o=>"&nbsp;&nbsp;→ "+esc(o.en)).join("<br>");}).join("<br>")}</p></details>
+    <details><summary>👨 아빠 문장 · Lv${lv('dad')}</summary><p class="en">${PL('dad').map(p=>esc(p.en)).join("<br>")}</p></details>
+    <details><summary>👩 엄마 문장 · Lv${lv('mom')}</summary><p class="en">${PL('mom').map(p=>esc(p.en)).join("<br>")}</p></details>
+  </div>
+  <div class="card" style="margin-top:14px"><h2 class="ko-title" style="margin-top:0;font-size:20px">설정</h2>
+    <p>말하기 속도 <b id="rateV">${settings.rate}</b></p>
+    <input type="range" id="rate" min="0.6" max="1.2" step="0.05" value="${settings.rate}" style="width:100%">
+    ${claudeTTS?`<p style="margin-top:14px">목소리</p><div class="row">
+      <button class="btn ${settings.engine==='device'?'blue':'ghost'}" data-eng="device">기기 목소리</button>
+      <button class="btn ${settings.engine==='claude'?'blue':'ghost'}" data-eng="claude">Claude 목소리</button></div>`:''}
+    <div class="row" style="margin-top:10px"><button class="btn ghost" id="testV">🔊 목소리 들어 보기</button></div>
+    <p class="muted" style="margin-top:14px">음성 인식: ${canListen()?"사용 가능 ✔":"이 브라우저에서는 사용 불가 (버튼으로 진행)"}</p>
+    <p class="muted">동의일: ${consent?new Date(consent.at).toLocaleString("ko-KR"):"-"}</p>
+    <button class="btn ghost" id="revoke">동의 철회 및 기록 삭제</button>
+  </div>
+  <div class="modal" id="revokeModal" style="display:none"><div class="card center">
+    <p>동의를 철회하면 이 기기의 사용 기록이 모두 지워지고 처음 화면으로 돌아가요.</p>
+    <div class="row" style="justify-content:center"><button class="btn ghost" id="rvNo">취소</button><button class="btn primary" id="rvYes">철회하기</button></div></div></div>`;
+}
+function bindDash(){
+  const r=document.getElementById("rate");
+  r.oninput=()=>{ settings.rate=+r.value; document.getElementById("rateV").textContent=settings.rate; store.set("settings",settings); };
+  document.querySelectorAll("[data-eng]").forEach(b=>b.onclick=()=>{ settings.engine=b.dataset.eng; store.set("settings",settings); render(); });
+  document.getElementById("testV").onclick=()=>speak("Good morning! I'm Pip. Let's have fun with English!");
+  const m=document.getElementById("revokeModal");
+  document.getElementById("revoke").onclick=()=>{ m.style.display="flex"; };
+  document.getElementById("rvNo").onclick=()=>{ m.style.display="none"; };
+  document.getElementById("rvYes").onclick=()=>{
+    try{ Object.keys(localStorage).filter(k=>k.startsWith("fe_")).forEach(k=>localStorage.removeItem(k)); }catch(e){}
+    memUsage={}; go("consent");
+  };
+}
+
+/* ===================== 렌더 ===================== */
+function render(){
+  const s=S.screen; let html="";
+  if(s!=="consent" && !store.get("consent",null) && !S.consentMem){ /* 저장소가 없으면 이번 방문만 */ }
+  if(s==="consent") html=viewConsent();
+  else if(s==="home") html=viewHome();
+  else if(s==="family") html=viewFamily();
+  else if(s==="daughter") html=viewDaughter();
+  else if(s==="daughterLocked") html=viewDaughterLocked();
+  else if(s==="parent") html=viewParent();
+  else if(s==="gate") html=viewGate();
+  else if(s==="dash") html=viewDash();
+  $app.innerHTML=html;
+  document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{
+    const to=b.dataset.go;
+    if(to==="family"){ go("family",{stage:0,stageStart:Date.now(),echoIdx:0,roleIdx:0,storyIdx:0}); startTicking("family"); speak("Hello, everyone! I'm Pip. Let's sing!"); return; }
+    if(to==="daughter"){
+      if(usageSec("daughter")>=DAUGHTER_LIMIT_MIN*60){ go("daughterLocked"); return; }
+      go("daughter",{tab:"shadow",shIdx:0}); startTicking("daughter"); return;
+    }
+    if(to==="parent"){ const who=b.dataset.who; go("parent",{who}); startTicking(who); return; }
+    go(to);
+  });
+  bindLevelPickers();
+  if(s==="consent") bindConsent();
+  if(s==="family") bindFamily();
+  if(s==="daughter") bindDaughter();
+  if(s==="parent") bindParent();
+  if(s==="gate") bindGate();
+  if(s==="dash") bindDash();
+}
+/* 저장소가 막힌 환경에서도 동의 후 진행되도록 */
+const _origSet = store.set; store.set = function(k,v){ _origSet(k,v); if(k==="consent") S.consentMem=v; };
+const _origGet = store.get; store.get = function(k,d){ const v=_origGet(k,d); if(k==="consent" && v==null && S && S.consentMem) return S.consentMem; return v; };
+render();
+/* 홈 화면 설치·오프라인 지원 (독립 주소로 배포했을 때만 동작) */
+try{ if("serviceWorker" in navigator && location.protocol==="https:" && !/claude\.ai|claudeusercontent/.test(location.host)){ navigator.serviceWorker.register("sw.js").catch(()=>{}); } }catch(e){}
+</script>
+</body>
