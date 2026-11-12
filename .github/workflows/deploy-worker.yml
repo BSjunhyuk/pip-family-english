@@ -1,0 +1,48 @@
+# 가족 계정 서버(Cloudflare Worker)를 배포합니다.
+# worker/ 폴더가 바뀌면 자동 실행되고, Actions 탭에서 직접 실행할 수도 있어요.
+name: Deploy family account server
+
+on:
+  push:
+    branches: [main]
+    paths: ["worker/**", ".github/workflows/deploy-worker.yml"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check settings
+        env:
+          D1_ID: ${{ vars.D1_DATABASE_ID }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$D1_ID" ] || [ -z "$CF_TOKEN" ]; then
+            echo "::error::D1_DATABASE_ID 변수 또는 CLOUDFLARE_API_TOKEN 비밀값이 없어요. worker/SETUP.md를 참고해 주세요."
+            exit 1
+          fi
+          sed -i "s/D1_DATABASE_ID_PLACEHOLDER/$D1_ID/" worker/wrangler.toml
+
+      - name: Create tables and deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: worker
+          wranglerVersion: "4.160.1"
+          preCommands: npx wrangler d1 execute pip-family-db --remote --file=schema.sql
+          command: deploy
+          secrets: |
+            KAKAO_REST_KEY
+            KAKAO_CLIENT_SECRET
+            NAVER_CLIENT_ID
+            NAVER_CLIENT_SECRET
+            SESSION_SECRET
+        env:
+          KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+          KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}

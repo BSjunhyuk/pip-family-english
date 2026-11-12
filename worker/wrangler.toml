@@ -1,0 +1,19 @@
+# Pip과 함께 가족 영어 — 가족 계정 서버 설정
+name = "pip-family-api"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[vars]
+APP_URL = "https://bsjunhyuk.github.io/pip-family-english/"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pip-family-db"
+database_id = "D1_DATABASE_ID_PLACEHOLDER"  # 배포할 때 GitHub 변수 D1_DATABASE_ID 값으로 바뀝니다
+
+# 매일 새벽 3시 17분(한국 시간) 3개월 미사용 가족 자동 삭제
+[triggers]
+crons = ["17 18 * * *"]
+
+# 비밀값(코드에 넣지 않음): KAKAO_REST_KEY, KAKAO_CLIENT_SECRET, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, SESSION_SECRET
